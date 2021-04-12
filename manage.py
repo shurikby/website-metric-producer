@@ -3,7 +3,7 @@
 
 import sys
 import re
-from app import my_app
+from app import producer
 
 
 def print_help_options():
@@ -25,7 +25,8 @@ if __name__ == "__main__":
             print_help_options()
             has_valid_action = True
         if re.compile(r"^run$", re.IGNORECASE).match(action):
-            my_app.run('website metrics')
+            app = producer.create_producer()
+            app.run('website metrics')
             has_valid_action = True
     if not has_valid_action:
         print_help_options()
