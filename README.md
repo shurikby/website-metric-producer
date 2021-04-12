@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/etycomputer/website-metric-producer)
+
 # website-metric-producer
 
 ## Introduction
