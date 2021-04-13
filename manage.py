@@ -28,7 +28,7 @@ if __name__ == "__main__":
             print_help_options()
             has_valid_action = True
         elif re.compile(r"^--force-init-db$", re.IGNORECASE).match(action):
-            pg_db = database.create_producer()
+            pg_db = database.create_postgres_db()
             pg_db.drop_db()
             pg_db.create_db()
             pg_db.seed_db()
