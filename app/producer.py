@@ -4,6 +4,7 @@ from app import database, kafka
 from threading import Thread, Event, Lock
 from requests import get
 from re import search
+
 logging.basicConfig(format="%(asctime)s: %(message)s", level=logging.INFO, datefmt="%H:%M:%S")
 
 
@@ -25,7 +26,7 @@ class Producer:
     global_event = Event()
     global_sample_results = []
 
-    def __init__(self, pg_db: database.MyPostgresDB, kafka_p:kafka.MyKafkaProducer, log: logging):
+    def __init__(self, pg_db: database.MyPostgresDB, kafka_p: kafka.MyKafkaProducer, log: logging):
         self.log = log
         self.pg_db = pg_db
         self.kafka_p = kafka_p
