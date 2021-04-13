@@ -44,6 +44,9 @@ class MyPostgresTest(unittest.TestCase):
         self.assertTrue(self.my_db.drop_db())
 
     def test_insert_measurements(self):
+        if integration_mode is False:
+            self.assertTrue(True)
+            return
         measurements = [
             [6, datetime.now(timezone.utc).__str__(), 200, 1.166535, True],
             [5, datetime.now(timezone.utc).__str__(), 200, 2.170638, True]
