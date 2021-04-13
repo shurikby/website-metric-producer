@@ -52,37 +52,6 @@ class MyPostgresDB:
                    "Drop TABLE IF EXISTS {prefix}target_urls RESTRICT".format(prefix=self.prefix), )
         return queries if self.testing is True else self.execute_queries(queries)
 
-    def insert_sample_measurements(self, measurements=None):
-        isSuccessful = True
-        if measurements is None:
-            measurements = []
-        if not measurements:
-            pass
-        query = """INSERT INTO {prefix}url_performance_metrics 
-(url_id, sample_timestamp, response_code, response_time, match_found) 
-VALUES (%s,%s,%s,%s,%s)""".format(prefix=self.prefix)
-        connection = None
-        cursor = None
-        try:
-            # connect to the PostgreSQL server
-            connection = psycopg2.connect(**postgres_connection_config_params)
-            cursor = connection.cursor()
-            # execute the INSERT statement
-            cursor.executemany(query, measurements)
-            # commit the changes
-            connection.commit()
-            # close communication with the PostgreSQL database server
-            cursor.close()
-        except (Exception, psycopg2.DatabaseError) as error:
-            self.log.info(error)
-            isSuccessful = False
-        finally:
-            # closing database connection.
-            if connection:
-                cursor.close()
-                connection.close()
-        return isSuccessful
-
     def execute_queries(self, queries=()) -> bool:
         isSuccessful = True
         connection = None
