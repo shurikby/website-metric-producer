@@ -9,7 +9,7 @@ logging.basicConfig(format="%(asctime)s: %(message)s", level=logging.INFO, datef
 
 
 def get_website_metrics(url='http://localhost', find_str=None):
-    sample_start_time = datetime.now(timezone.utc)
+    sample_start_time = datetime.now(timezone.utc).__str__()
     r = get(url, timeout=120)
     isFound = True
     if find_str is not None:
