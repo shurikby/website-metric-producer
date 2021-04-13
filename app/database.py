@@ -123,7 +123,7 @@ class MyPostgresDB:
             connection = psycopg2.connect(**postgres_connection_config_params)
             cursor = connection.cursor()
             # execute the INSERT statement
-            cursor.executemany(query, measurements)
+            cursor.executemany(query, tuple(measurements))
             # commit the changes
             connection.commit()
             # close communication with the PostgreSQL database server
@@ -139,5 +139,5 @@ class MyPostgresDB:
         return isSuccessful
 
 
-def create_producer(test_mode=None) -> MyPostgresDB:
+def create_postgres_db(test_mode=None) -> MyPostgresDB:
     return MyPostgresDB(logging, test_mode)
