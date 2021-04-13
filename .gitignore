@@ -130,3 +130,6 @@ dmypy.json
 
 # My git ignore list
 /.idea/
+/ca.pem
+/service.cert
+/service.key
