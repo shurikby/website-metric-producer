@@ -9,12 +9,21 @@ logging.basicConfig(format="%(asctime)s: %(message)s", level=logging.INFO, datef
 
 
 def get_website_metrics(url='http://localhost', find_str=None):
-    sample_start_time = datetime.now(timezone.utc).__str__()
-    r = get(url, timeout=120)
-    isFound = True
-    if find_str is not None:
-        isFound = search(find_str, r.text) is not None
-    return sample_start_time, r.status_code, r.elapsed.total_seconds(), isFound
+    sample_start_time = datetime.now(timezone.utc)
+    try:
+        r = get(url, timeout=120)
+        status_code = r.status_code
+        elapsed_seconds = r.elapsed
+        isFound = True
+        if find_str is not None:
+            isFound = search(find_str, r.text) is not None
+    except Exception as err:
+        logging.info("An error occurred while getting website metrics: %s", err)
+        status_code = 503
+        elapsed_seconds = datetime.now(timezone.utc) - sample_start_time
+        isFound = False
+
+    return sample_start_time.__str__(), status_code, elapsed_seconds.total_seconds(), isFound
 
 
 class Producer:
@@ -82,7 +91,7 @@ class Producer:
         if auto_save_thread_handler:
             auto_save_thread_handler.join()
         tmp_count = len(self.global_sample_results)
-        logging.info("Saving any remaining sample %s.", tmp_count)
+        self.log.info("Saving any remaining sample %s.", tmp_count)
         self.pg_db.insert_measurements(self.global_sample_results)
         self.log.info("Exiting the producer.")
 
