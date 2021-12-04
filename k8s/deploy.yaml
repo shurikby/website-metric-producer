@@ -48,4 +48,6 @@ spec:
           requests:
             memory: "40Mi"
             cpu: "5m"
+      imagePullSecrets:
+      - name: jfrog-docker
 status: {}
