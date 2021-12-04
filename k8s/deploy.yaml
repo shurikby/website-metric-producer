@@ -18,7 +18,7 @@ spec:
         app: wmp
     spec:
       containers:
-      - image: shurikby/huita:${BUILD_NUMBER}
+      - image: shurikby.jfrog.io/final-docker/wmp/${BRANCH_NAME}:${BUILD_NUMBER}
         name: wmp
         env:
           - name: POSTGRES_DB_USER
