@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: wmp
+  name: wmp
+  namespace: wmp
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: wmp
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: wmp
+    spec:
+      containers:
+      - image: shurikby/huita:${BUILD_NUMBER}
+        name: wmp
+        env:
+          - name: POSTGRES_DB_USER
+            value: "postgres"
+          - name: POSTGRES_DB_PASSWORD
+            value: $DBPASS
+          - name: POSTGRES_DB_HOST
+            value: "postgres.wmp.svc.cluster.local"
+          - name: POSTGRES_DB_PORT
+            value: "5432"
+          - name: POSTGRES_DB_DATABASE
+            value: "wmp"
+          - name: TARGET_SIMULATOR_HOST
+            value: "https://simple-flask-website-simulator.herokuapp.com"
+          - name: KAFKA_HOST_PORT
+            value: "kafka-headless.kafka.svc.cluster.local:9092"
+          - name: KAFKA_TOPIC
+            value: "metric"
+          - name: KAFKA_CLIENT_ID
+            value: "metric"
+          - name: KAFKA_GROUP_ID
+            value: "metric"
+        resources:
+          limits:
+            memory: "200Mi"
+            cpu: "30m"
+          requests:
+            memory: "40Mi"
+            cpu: "5m"
+status: {}
