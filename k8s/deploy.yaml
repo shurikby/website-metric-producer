@@ -8,6 +8,7 @@ metadata:
   namespace: wmp
 spec:
   replicas: 1 
+  progressDeadlineSeconds: 222
   selector:
     matchLabels:
       app: wmp
@@ -17,7 +18,6 @@ spec:
       labels:
         app: wmp
     spec:
-      progressDeadlineSeconds: 222
       containers:
       - image: shurikby.jfrog.io/final-docker/wmp/${BRANCH_NAME}:${BUILD_NUMBER}
         name: wmp
