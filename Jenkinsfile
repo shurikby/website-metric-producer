@@ -37,6 +37,7 @@ pipeline {
                 script {
                     withKubeConfig([credentialsId: 'kubectl', serverUrl: 'https://192.168.1.16:6443']) {
                         sh 'envsubst < k8s/deploy.yaml | kubectl apply -f -'
+                        sh 'kubectl rollout status deployment wmp -n wmp'
                     }
                 }
             }

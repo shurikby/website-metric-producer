@@ -17,6 +17,7 @@ spec:
       labels:
         app: wmp
     spec:
+      progressDeadlineSeconds: 222
       containers:
       - image: shurikby.jfrog.io/final-docker/wmp/${BRANCH_NAME}:${BUILD_NUMBER}
         name: wmp
